@@ -1,0 +1,44 @@
+<!-- toto뿐 아니라 다른곳에도 활용하려고 common 폴더에 적용 -->
+
+{% extends "base.html" %}
+{% block content %}
+<!-- container와 my-3을 사용하여 간격을 조절하고 컨테이너 스타일을 적용 -->
+<div class="container my-3">
+    <!-- 로그인 폼을 생성합니다. "post"는 폼 데이터를 서버로 제출할 때 POST 
+    메서드를 사용한다는 것을 나타내며, "{% url 'common:login' %}"은 해당 폼이
+    제출될 때 어떤 URL로 이동할지를 지정 -->
+    <form method="post" action="{% url 'common:login' %}">
+        {% csrf_token %}
+        <!-- 로그인 성공후 이동되는 URL, next는 '질문 등록하기'를 눌러
+            로그인 화면으로 전환된 상태-->
+        <input type="hidden" name="next" value="{{ next }}">
+        <!-- 로그인 에러 템플릿 연결 -->
+        {% include "form_errors.html" %}
+        
+        <!-- 아이디 입력부분 -->
+        <div class="mb-3">
+            <label for="username">사용자ID</label>
+            <!-- type="text": 입력 필드의 타입이 텍스트 입력을 나타냅니다.
+            class="form-control": Bootstrap의 클래스인 form-control을 사용하여 
+            입력 필드의 스타일을 지정. name="username": 폼 데이터를 서버로 
+            전송할 때 해당 입력 필드의 이름을 나타냅니다. 서버 측에서는 
+            이 이름을 사용하여 해당 필드의 값을 식별합니다.
+            id="username": 입력 필드를 식별하는 고유한 ID입니다. 
+            레이블과 연결하기 위해 사용될 수 있다.value 입력 필드의 초기값을
+            설정하는 부분입니다. 해당 폼 필드의 값이 존재하면 그 값을, 존재하지
+            않으면 빈 문자열('')을 사용합니다. 
+            이렇게 하면 사용자가 이전에 입력한 값을 유지할 수 있습니다. -->
+            <input type="text" class="form-control" name="username" id="username"
+                value="{{ form.username.value|default_if_none:'' }}">
+        </div>
+        <!-- 비밀번호 입력부분 -->
+        <div class="mb-3">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" name="password" id="password"
+                value="{{ form.password.value|default_if_none:'' }}">
+        </div>
+        <!-- 로그인 버튼 생성 -->
+        <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+</div>
+{% endblock %}
