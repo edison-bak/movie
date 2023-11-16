@@ -16,18 +16,18 @@
                 <li class="nav-item">
                     <!-- 사용자가 인증돼있으면(로그인) 로그아웃 나오게 -->
                     {% if user.is_authenticated %}
-                    <!-- 누르면 로그인->로그아웃 상태됨 -->
-                    <a class="nav-link" href="{% url 'common:logout' %}">
+                        <!-- 누르면 로그인->로그아웃 상태됨 -->
+                        <a class="nav-link" href="{% url 'common:logout' %}">
                         {{ user.username }} (로그아웃)</a>
                     <!-- 반대 상태면 로그인 나오게 -->
                     {% else %}
                     <!-- 누르면 로그아웃->로그인 바뀜 -->
-                    <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
+                        <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
                     {% endif %}
                 </li>
                 <li>
                     {% if not user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'common:signup' %}">회원가입</a>
+                        <a class="nav-link" href="{% url 'common:signup' %}">회원가입</a>
                     {% endif %}
                 </li>
             </ul>

@@ -1,5 +1,4 @@
 <!-- 투표 제출후 나오는 결과 페이지 입니다. -->
-
 {% extends 'base.html' %}
 {% block content %}
 
@@ -12,13 +11,10 @@
         {{ choice.choice_text }} : {{ choice.votes }}
     </label>
     <br>
+    투표한 사용자들:
+        {% for user_vote in choice.userinfo_set.all %}
+            {{ user_vote.user.username }},
+        {% endfor %}
+    <br><br>
 {% endfor %}
-
-<!-- {% for voter in question.voter_set.all %}
-    <label>
-        {{ voter.voter }},
-    </label>
-    <br>
-{% endfor %} -->
-
 {% endblock %}

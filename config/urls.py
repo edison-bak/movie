@@ -12,5 +12,6 @@ urlpatterns = [
 
     path('', views.index, name='index'),  # '/' 에 해당되는 path
 
+    path('rest/', include('toto_api.urls')),
 ]
 

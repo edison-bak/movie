@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-
+    <!-- 투표기간(경기날짜 전) 이라면 -->
     {% if question.game_date > current_time %}
     <!-- views 에 vote 연결 -->
     <form action="{% url 'toto:vote' question.id %}" method="post">
@@ -40,7 +40,6 @@
         {% if error_message %}
         <p><strong>{{ error_message }}</strong></p>
         {% endif %}
-
         <!-- 승리예측을 선택하는 라디오 버튼 추가 -->
         {% for choice in question.choice_set.all %}
             <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
@@ -54,11 +53,15 @@
     <!-- 승리 예측 선택후 제출(vote) 버튼 추가 -->
     <input type="submit" value="Vote" class="">
     </form>
-    {% else %}
-    <p>투표 기간이 아닙니다.</p>
-    {% endif %}
-    <br><br>
+    <!-- 이미 투표에 참여했다면 -->
+    {% elif error_message %}
+        <p>{{ error_message }}</p>
 
+    {% else %}
+        <p>투표 기간이 아닙니다.</p>
+    {% endif %}
+
+    <br><br>
     <!-- 현재 댓글창 출력 -->
     <h9 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 댓글이 있습니다.</h9>
     <br>
@@ -71,31 +74,16 @@
         {% csrf_token %}
 
         <!-- 오류표시 Start -->
-        {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            {% for field in form %}
-            {% if field.errors %}
-            <div>
-                <strong>{{ field.label }}</strong>
-                {{ field.errors }}
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        <!-- 오류표시 End -->
+        {% include "form_errors.html" %}
 
         <!-- 하위 요소들을 수평으로 배치하기 위한 Flexbox 레이아웃 -->
         <div class="d-flex">
-            <!-- textarea는 우선 로그인 상태에서만 접근가능하고,
-            여러 줄의 텍스트 입력란을 생성
-            form-control 클래스는 부트스트랩에서 제공하는 스타일을 적용하고,
+            <!-- textarea는 우선 로그인 상태에서만 접근가능하고,텍스트 입력란
             ntextarea 클래스는 사용자 정의 CSS 스타일을 적용
             rows 속성은 입력란의 초기 행 수를 1로 설정
             onkeypress 이벤트 핸들러를 등록, 이벤트 타겟은 아래에 정의됨 -->
             <textarea {% if not user.is_authenticated %}disabled{% endif %}
             name="content" id="content" class="form-control" rows="1" onkeypress="submitOnEnter(event)"></textarea>
-
             <!-- btn btn-primary 클래스는 부트스트랩에서 제공하는 버튼 스타일 -->
             <input type="submit" value="등록" class="btn btn-primary" rows="5">
         </div>
@@ -109,8 +97,12 @@
                 // 아무것도 입력하지 않고 등록하려고하면 막음
                 if (event.target.value.trim() === ''){
                     alert('텍스트를 입력하세요.')}
+                // 입력된 텍스트가 비어있지 않은 경우
                 else{
+                    // 이벤트(enter)의 기본 동작(submit)을 방지합니다. 
                     event.preventDefault();
+                    // 사용자가 직접 제출 버튼을 누르지 않고 JavaScript 코드를
+                    // 사용하여 폼을 서버에 제출
                     event.target.form.submit();
                 }
             }

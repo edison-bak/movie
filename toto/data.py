@@ -2,7 +2,7 @@
 import requests
 import pandas as pd
 import json
-from toto.models import *
+from models import *
 
 def get_matches_data(api_key):
     uri = 'https://api.football-data.org/v4/matches' #정보를 받아오는 곳
@@ -29,11 +29,9 @@ def get_matches_data(api_key):
     # 데이터프레임 생성
     columns = ['경기일시', '경기상태', '1팀', '2팀', '1팀 득점', '2팀 득점', '승자', '1팀득점자', '2팀득점자']
     df = pd.DataFrame(matches_data, columns=columns)
-
     # 경기 일시를 기준으로 오름차순 정렬
     df['경기일시'] = pd.to_datetime(df['경기일시'])
     df = df.sort_values(by='경기일시').reset_index(drop=True)
-
     # 인덱스를 1부터 시작하도록 변경
     df.index = df.index + 1
     return df
@@ -49,6 +47,6 @@ def update_and_upload_data(df):
 
 # 파이썬을 직접실행했을 때 실행됨
 # if __name__ == "__main__":
-api_key = 'cb276b669f6f4e9cb0ad5c32a78ec0d7'
-df = get_matches_data()
+api_key = ''
+df = get_matches_data(api_key)
 update_and_upload_data(df)

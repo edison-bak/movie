@@ -30,9 +30,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# INSTALLED_APPS 설정은 이러한 앱들을 등록하여 Django가 해당 앱을 식별하고 
+# 사용할 수 있도록 합니다.
 INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'toto.apps.TotoConfig',
+    # 장고 rest 프레임워크
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

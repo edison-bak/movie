@@ -32,12 +32,9 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # 선택팀 텍스트(토트넘 등등) 
     choice_text = models.CharField(max_length=200)
-    # 투표수
+    # 투표수    
     votes = models.IntegerField(default=0)
-    # 투표자
-    # voter = models.ForeignKey(Question, on_delete=models.CASCADE, null=True)
-    # voter = models.ManyToManyField(Question, related_name='voter_list', blank=True)
-    # 관리자 화면에서 초이스를 아래 형식으로 출력
+
     # [토트넘vs 맨유] 토트넘
     def __str__(self):
         return f'[{self.question.subject}] {self.choice_text}'
@@ -53,7 +50,8 @@ class Answer(models.Model):
     # 작성자 속성,기존에 저장된 값들은 null 처리
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
-
-# (미구현) 유저의 모델 필요
-
-
+# 유저의 모델 
+class Userinfo(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, null=True, blank=True)

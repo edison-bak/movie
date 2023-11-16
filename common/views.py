@@ -1,22 +1,27 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+# forms에서 UserForm 가져옴
 from common.forms import UserForm
 
 
 def signup(request):
-    # POST 요청인 경우에는 화면에서 입력한 데이터로 사용자를 생성
+    # 회원가입 내용 입력하고 POST 눌렀을때.
     if request.method == "POST":
+        # 회원가입 모듈로 회원 생성 
         form = UserForm(request.POST)
+        # 만약 잘 입력했으면 저장
         if form.is_valid():
             form.save()
-        # form.cleaned_data.get 폼의 입력값을 개별적으로 얻고 싶은 경우에 사용
+            # 가입후 자동 로그인 하기 위해 정보 불러옴
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            # 사용자 인증
+            # 인증
             user = authenticate(username=username, password=raw_password) 
             # 로그인
             login(request, user)
+            # 'index'라는 이름의 URL로 리다이렉트 path('', views.index,name='index')
             return redirect('index')
+    # 회원가입 페이지에 접근했을때(GET 요청)일 경우 빈 회원가입 폼 생성
     else:
         form = UserForm()
     return render(request, 'common/signup.html', {'form': form})

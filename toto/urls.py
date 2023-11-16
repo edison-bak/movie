@@ -6,7 +6,7 @@ from . import views
 app_name='toto'
 
 urlpatterns = [
-    # /toto 링크를 입력하면, view.py 의 index 메서드 연결
+    # /toto 요청이 들어오면, view.py 의 index 메서드 연결
     path('', views.index,name='index'),
     
     # /toto/숫자/ 링크를 입력하면, view.py 의 detail 메서드 연결
