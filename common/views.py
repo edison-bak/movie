@@ -5,9 +5,11 @@ from common.forms import UserForm
 
 
 def signup(request):
-    # 회원가입 내용 입력하고 POST 눌렀을때.
+    #  HTTP 요청의 메소드가 "POST"인지 확인, 회원가입 내용 입력하고 POST 눌렀을때.
     if request.method == "POST":
         # 회원가입 모듈로 회원 생성 
+        # request.POST는 사전 형태로 폼 데이터를 제공하며, 
+        # HTML 폼에서 전송된 데이터를 키-값 쌍으로 받아올 수 있습니다
         form = UserForm(request.POST)
         # 만약 잘 입력했으면 저장
         if form.is_valid():

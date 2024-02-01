@@ -4,7 +4,7 @@
 이름은 수업과 최대한 비슷하게 구성했지만 일부 차이가 있습니다.<br>
 <br>
 question_text->subject<br>
-polls->toto<br>
+polls->movie<br>
 detail.html->question_detail.html<br>
 list.html->question_list.html<br>
 <br>

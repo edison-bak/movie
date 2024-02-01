@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 # 사용할 수 있도록 합니다.
 INSTALLED_APPS = [
     'common.apps.CommonConfig',
-    'toto.apps.TotoConfig',
+    'movie.apps.movieConfig',
     # 장고 rest 프레임워크
     'rest_framework',
     'django.contrib.admin',

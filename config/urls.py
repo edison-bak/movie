@@ -1,17 +1,17 @@
 from django.contrib import admin
 from django.urls import path, include
-from toto import views
+from movie import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    # /toto/ 링크가 오면 toto의 urls로
-    path('toto/',include('toto.urls')),
+    # /movie/ 링크가 오면 movie의 urls로
+    path('movie/',include('movie.urls')),
 
     path('common/', include('common.urls')),
 
     path('', views.index, name='index'),  # '/' 에 해당되는 path
 
-    path('rest/', include('toto_api.urls')),
+    path('rest/', include('movie_api.urls')),
 ]
 
