@@ -1,16 +1,19 @@
+# 데이터베이스(sqlite3)에서 models 테이블 가져옴
 from django.db import models
-# 사용자 모델로 회원가입시 데이터 저장 등에 사용
+# 회원 데이터 가져옴
 from django.contrib.auth.models import User
 
-from django.db import models
 from django.utils import timezone
 import datetime
+
+# 관리자 가져옴
 from django.contrib import admin
 
 # 경기
 class Question(models.Model):
     # 경기제목
-    # verbose_name='경기' 는 관리자 화면에서 열이름으로 쓰임
+    # verbose_name='경기'는 대한 인간이 이해하기 쉬운 이름을 지정하는 데 사용되는 속성
+    # 관리자 화면에서 열이름으로 쓰임
     subject = models.CharField(max_length=200, verbose_name='경기')
     # 경기내용
     content = models.TextField()
@@ -30,9 +33,9 @@ class Question(models.Model):
 class Choice(models.Model):
     # 선택을 경기와 묶어줌, 경기가 삭제되면 선택도 삭제되게 설정
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    # 선택팀 텍스트(토트넘 등등) 
+    # 선택팀 텍스트(토트넘 등등)
     choice_text = models.CharField(max_length=200)
-    # 투표수    
+    # 투표수
     votes = models.IntegerField(default=0)
 
     # [토트넘vs 맨유] 토트넘

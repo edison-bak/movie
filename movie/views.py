@@ -1,15 +1,25 @@
+# pyexpat 패키지의 messages 모듈을 가져옵니다.
 from pyexpat.errors import messages
+# Django의 shortcuts 모듈에서 필요한 기능을 가져옵니다.
 from django.shortcuts import get_object_or_404, redirect,render
+# Django의 timezone 모듈을 가져옵니다.
 from django.utils import timezone
+# 현재 앱(.으로 표시)의 models.py에서 모든 모델을 가져옵니다.
 from .models import *
 #페이징으로 페이지에 보이는 경기 갯수를 제한
 from django.core.paginator import Paginator
+# Django의 HTTP 응답 클래스들을 가져옵니다.
 from django.http import HttpResponseRedirect
+# Django의 reverse 함수를 가져옵니다.
 from django.urls import reverse
+# 데이터베이스의 models에서 F 객체를 가져옵니다.
+# 데이터베이스에서 직접 필드 값을 가져와서 계산
 from django.db.models import F
 
 from django.http import HttpResponseNotAllowed
+# 현재 앱의 forms.py에서 AnswerForm 클래스를 가져옵니다.
 from .forms import AnswerForm
+# Django의 login_required 데코레이터를 가져옵니다.
 from django.contrib.auth.decorators import login_required
 
 # 메인 경기페이지
@@ -77,9 +87,10 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     
     # 데이터베이스에서 사용자가 해당 질문에 이미 투표했는지 확인
-    # 투표했으면 이미 투표했다는 문구 출력
+    # 유저가 해당질문에 이미 투표했으면, 이미 투표했다는 문구 출력
     if Userinfo.objects.filter(user=request.user, question=question).exists():
         return render(request, 'movie/question_detail.html', {'question': question, 'error_message': "이미 투표한 사용자입니다."})
+
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     #선택 안한경우 처리
